@@ -12,6 +12,9 @@
     <div class="card-footer text-muted">
       Tags: {% for t in note.tags %}
       <a href="{{ url_for('tags_view', tag_name=t.name) }}">{{ t.name }}</a>
+      <form action="{{ url_for('tags_delete', tag_id=t.id) }}" method="POST">
+        <button type="submit" class="btn btn-danger">Remove Tag</button>
+      </form>
       {% endfor %}
       <br />
       Last update: {{ note.updated_date }}
