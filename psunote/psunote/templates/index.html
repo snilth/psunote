@@ -9,22 +9,24 @@
   <div class="card-body">
     <h4 class="card-title">{{ note.title }}</h4>
     <div class="card-text my-3">{{ note.description }}</div>
+    <div style="display: flex;">
+      <form action="{{ url_for('notes_edit', note_id=note.id) }}" method="POST">
+        <button class="btn btn-primary">Edit Note</button>      
+      </form>
+      <form action="{{ url_for('notes_delete', note_id=note.id) }}" method="POST">
+        <button type="submit" class="btn btn-danger mx-1">Delete Note</button>
+      </form>
+    </div>
+    <br>
     <div class="card-footer text-muted">
       Tags: {% for t in note.tags %}
       <a href="{{ url_for('tags_view', tag_name=t.name) }}">{{ t.name }}</a>
       <form action="{{ url_for('tags_delete', tag_id=t.id) }}" method="POST">
-        <button type="submit" class="btn btn-danger">Remove Tag</button>
+        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
       </form>
       {% endfor %}
       <br />
       Last update: {{ note.updated_date }}
-    </div>
-    <br />
-    <div style="display: flex;">
-      <button class="btn btn-primary">Edit</button>
-      <form action="{{ url_for('notes_delete', note_id=note.id) }}" method="POST">
-        <button type="submit" class="btn btn-danger mx-1">Delete</button>
-      </form>
     </div>
   </div>
 </div>
