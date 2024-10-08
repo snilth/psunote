@@ -113,15 +113,31 @@ def notes_edit(note_id):
 
     if note:
         form = forms.NoteForm(obj=note) 
-        
-        if form.validate_on_submit():
-            form.populate_obj(note)  
-            db.session.commit()
-            
-            return flask.redirect(flask.url_for("index"))
-    
-    return flask.render_template("notes-edit.html", form=form, note=note)
 
+        if form.validate_on_submit():
+            note.tags.clear()
+            note.title = form.title.data
+            note.description = form.description.data
+
+            for tag_name in form.tags.data:
+                if isinstance(tag_name, str) and tag_name.strip():
+                    tag_name = tag_name.strip()
+                    tag = db.session.execute(db.select(models.Tag).where(models.Tag.name == tag_name)).scalars().first()
+
+                    if not tag:
+                        tag = models.Tag(name=tag_name)
+                        db.session.add(tag)
+
+                    note.tags.append(tag)
+
+            db.session.commit()  
+            return flask.redirect(flask.url_for("index"))
+
+        form.title.data = note.title
+        form.description.data = note.description
+        form.tags.data = [tag.name for tag in note.tags]
+
+    return flask.render_template("notes-edit.html", form=form, note=note)
 
 
 if __name__ == "__main__":

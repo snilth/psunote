@@ -12,8 +12,11 @@
     {{ form.description.label }}
     {{ form.description(class_='form-control', rows=10) }}
   </div>
+  <div class="form-group my-3">
+    {{ form.tags.label }}
+    {{ form.tags(class_='form-control') }}
+  </div>
   <button type="submit" class="btn btn-primary">Save Change</button>
 </form>
 
 {% endblock %}
-

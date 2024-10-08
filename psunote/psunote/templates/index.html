@@ -11,7 +11,7 @@
     <div class="card-text my-3">{{ note.description }}</div>
     <div style="display: flex;">
       <form action="{{ url_for('notes_edit', note_id=note.id) }}" method="POST">
-        <button class="btn btn-primary">Edit Note</button>      
+        <button class="btn btn-primary mx-1">Edit Note</button>      
       </form>
       <form action="{{ url_for('notes_delete', note_id=note.id) }}" method="POST">
         <button type="submit" class="btn btn-danger mx-1">Delete Note</button>
